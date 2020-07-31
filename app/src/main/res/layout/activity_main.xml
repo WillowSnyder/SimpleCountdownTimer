@@ -26,6 +26,7 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="16dp"
         android:id="@+id/addEventBtn"
-        app:srcCompat="@drawable/ic_plus" />
+        app:srcCompat="@drawable/ic_plus"
+        android:onClick="addEvent"/>
 
 </RelativeLayout>
