@@ -32,6 +32,15 @@ public class Event {
         return currentDateString;
     }
 
+    public String getDate(){
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR, year);
+        c.set(Calendar.MONTH, month);
+        c.set(Calendar.DAY_OF_MONTH, day);
+
+        return DateFormat.getDateInstance().format(c.getTime());
+    }
+
     public String getName(){
         return this.name;
     }
@@ -50,5 +59,17 @@ public class Event {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public int getDay() {
+        return day;
     }
 }
