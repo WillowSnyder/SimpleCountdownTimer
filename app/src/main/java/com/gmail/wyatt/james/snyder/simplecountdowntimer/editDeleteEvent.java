@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
@@ -73,15 +74,21 @@ public class editDeleteEvent extends AppCompatActivity implements DatePickerDial
     }
 
     public void editEvent(View view){
-        currEvent.setDay(this.day);
-        currEvent.setMonth(this.month);
-        currEvent.setYear(this.year);
-        currEvent.setName(eventName.getText().toString());
+        String nameString = eventName.getText().toString();
 
-        saveEvent();
+        if(nameString.equals("")){
+            Toast.makeText(this, "Event Must include a Name", Toast.LENGTH_SHORT).show();
+        } else{
+            currEvent.setDay(this.day);
+            currEvent.setMonth(this.month);
+            currEvent.setYear(this.year);
+            currEvent.setName(eventName.getText().toString());
 
-        Intent intent = new Intent(editDeleteEvent.this, MainActivity.class);
-        startActivity(intent);
+            saveEvent();
+
+            Intent intent = new Intent(editDeleteEvent.this, MainActivity.class);
+            startActivity(intent);
+        }
     }
 
     private void saveEvent(){

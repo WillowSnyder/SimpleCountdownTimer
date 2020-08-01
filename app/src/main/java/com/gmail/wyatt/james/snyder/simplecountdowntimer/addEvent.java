@@ -14,6 +14,11 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -29,6 +34,7 @@ public class addEvent extends AppCompatActivity implements DatePickerDialog.OnDa
     private ArrayList<Event> events;
     private EditText eventName;
     private int year, month, day;
+    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +53,10 @@ public class addEvent extends AppCompatActivity implements DatePickerDialog.OnDa
         this.day = c.get(Calendar.DAY_OF_MONTH);
 
         eventName = findViewById(R.id.eventName);
+
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
     }
 
     public void showDatePickerDialog(View view){
@@ -55,8 +65,16 @@ public class addEvent extends AppCompatActivity implements DatePickerDialog.OnDa
     }
 
     public void confirmEvent(View view){
-        saveEvent();
-        startActivity(new Intent(addEvent.this, MainActivity.class));
+        loadEvents();
+
+        String nameString = eventName.getText().toString();
+
+        if(nameString.equals("")){
+            Toast.makeText(this, "Event Must include a Name", Toast.LENGTH_SHORT).show();
+        } else {
+            saveEvent();
+            startActivity(new Intent(addEvent.this, MainActivity.class));
+        }
     }
 
     private void loadEvents(){
@@ -72,8 +90,6 @@ public class addEvent extends AppCompatActivity implements DatePickerDialog.OnDa
     }
 
     private void saveEvent(){
-        loadEvents();
-
         Event currentEvent = new Event(eventName.getText().toString(), this.year, this.month, this.day);
         events.add(currentEvent);
 
